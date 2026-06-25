@@ -1,0 +1,399 @@
+<!--
+  GenXEmpire HeyGen Extension
+  Copyright © 2026 GenXEmpire. All rights reserved.
+  License: Proprietary
+
+  NOTICE: All information contained herein is, and remains the property of GenXEmpire.
+  Dissemination of this information or reproduction of this material, including rebranding,
+  modification, reverse engineering, or redistribution, is strictly forbidden unless prior
+  written permission is obtained from GenXEmpire.
+
+  Website: https://genxempire.com
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #06080e;
+      --bg-base: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1a2236;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --gold-dark: #b45309;
+      --gold-glow: rgba(245,158,11,0.25);
+      --gold-glow-strong: rgba(245,158,11,0.5);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      --border-subtle: rgba(245,158,11,0.1);
+      --border-visible: rgba(245,158,11,0.3);
+      --success: #10b981;
+      --success-dark: #065f46;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 360px;
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Atmospheric background layers */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245,158,11,0.08) 0%, transparent 70%),
+        radial-gradient(circle at 85% 100%, rgba(180,83,9,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 10% 60%, rgba(251,191,36,0.04) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > * { position: relative; z-index: 1; }
+
+    /* ===== HEADER ===== */
+    .header {
+      padding: 16px 18px;
+      background: linear-gradient(180deg, rgba(17,24,39,0.95) 0%, rgba(11,15,25,0.9) 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    .logo-group { display: flex; align-items: center; gap: 12px; }
+
+    .logo-frame {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      box-shadow: 0 0 20px var(--gold-glow), 0 4px 12px rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .brand-stack { display: flex; flex-direction: column; line-height: 1.15; }
+
+    .brand-title {
+      font-size: 18px; font-weight: 700; letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #fef3c7 0%, var(--gold-light) 40%, var(--gold) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    .brand-tag {
+      font-size: 10px; font-weight: 600; color: var(--gold);
+      letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; opacity: 0.7;
+    }
+
+    .badge-count {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: #000; font-size: 12px; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px;
+      box-shadow: 0 0 16px var(--gold-glow);
+      min-width: 34px; text-align: center;
+    }
+
+    /* ===== SCAN BUTTON ===== */
+    .scan-section { padding: 14px 16px 6px; }
+
+    .btn-scan {
+      width: 100%; padding: 13px 16px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+      color: #000; font-family: inherit; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.3px; border: none; border-radius: var(--radius-md);
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 4px 20px var(--gold-glow);
+      transition: all 0.2s ease;
+      position: relative; overflow: hidden;
+    }
+
+    .btn-scan .shimmer {
+      position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-scan:hover {
+      box-shadow: 0 6px 30px var(--gold-glow-strong);
+      transform: translateY(-1px);
+    }
+
+    .btn-scan:active { transform: translateY(0); box-shadow: 0 2px 10px var(--gold-glow); }
+
+    .btn-scan:disabled {
+      background: #1e2130; color: var(--text-muted);
+      box-shadow: none; cursor: not-allowed; transform: none;
+    }
+
+    .btn-scan:disabled .shimmer { display: none; }
+    .btn-scan svg { width: 16px; height: 16px; flex-shrink: 0; position: relative; z-index: 1; }
+    .btn-scan .btn-label { position: relative; z-index: 1; }
+
+    .status-text {
+      font-size: 11px; color: var(--text-secondary);
+      text-align: center; padding: 8px 16px 6px;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px; margin: 4px 16px 10px;
+      background: linear-gradient(90deg, transparent, var(--border-visible), transparent);
+    }
+
+    /* ===== FILE LIST ===== */
+    .file-list { max-height: 220px; overflow-y: auto; padding: 0 16px 8px; }
+    .file-list::-webkit-scrollbar { width: 3px; }
+    .file-list::-webkit-scrollbar-track { background: transparent; }
+    .file-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--gold), var(--gold-dark)); border-radius: 3px;
+    }
+
+    .file-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--gold); border-radius: var(--radius-sm);
+      padding: 10px 12px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      transition: all 0.2s ease;
+      animation: cardIn 0.3s ease both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .file-card:hover {
+      border-color: var(--border-visible); background: var(--bg-card-hover);
+      box-shadow: 0 4px 16px rgba(245,158,11,0.1); transform: translateX(3px);
+    }
+
+    .file-meta { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+
+    .file-index {
+      width: 28px; height: 28px; border-radius: var(--radius-sm);
+      background: rgba(245,158,11,0.08); border: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--gold); flex-shrink: 0;
+    }
+
+    .file-type {
+      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+      background: rgba(245,158,11,0.1); color: var(--gold-light);
+      text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid var(--border-subtle);
+    }
+
+    .btn-download {
+      padding: 7px 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000; font-family: inherit; font-size: 11px; font-weight: 700;
+      border: none; border-radius: var(--radius-sm); cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+      transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0;
+    }
+
+    .btn-download svg { width: 12px; height: 12px; }
+
+    .btn-download:hover {
+      box-shadow: 0 3px 12px var(--gold-glow); filter: brightness(1.1);
+    }
+
+    .btn-download.done {
+      background: linear-gradient(135deg, var(--success), var(--success-dark));
+      color: #fff; cursor: default; filter: none; box-shadow: none;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state { text-align: center; padding: 28px 16px; }
+
+    .empty-visual {
+      width: 52px; height: 52px; margin: 0 auto 14px;
+      border-radius: 14px; background: rgba(245,158,11,0.06);
+      border: 1px dashed var(--border-visible);
+      display: flex; align-items: center; justify-content: center;
+      animation: emptyPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes emptyPulse {
+      0%, 100% { border-color: var(--border-visible); }
+      50% { border-color: var(--gold); }
+    }
+
+    .empty-visual svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+
+    .empty-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+    .empty-hint { font-size: 11px; color: var(--text-muted); }
+
+    /* ===== LIST FOOTER ===== */
+    .list-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 4px 16px 8px;
+    }
+
+    .file-count { font-size: 11px; color: var(--text-muted); }
+
+    .btn-clear {
+      font-family: inherit; font-size: 11px; color: var(--text-muted);
+      background: none; border: 1px solid var(--border-subtle);
+      padding: 4px 12px; border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 0.15s ease;
+    }
+
+    .btn-clear:hover { color: var(--gold); border-color: var(--border-visible); }
+
+    /* ===== SOCIAL LINKS ===== */
+    .social-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px 16px; }
+
+    .social-btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 6px; border-radius: var(--radius-md); text-decoration: none;
+      font-family: inherit; font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+      transition: all 0.2s ease; border: 1px solid;
+    }
+
+    .social-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .social-btn:hover { transform: translateY(-2px); }
+
+    .social-portfolio {
+      background: rgba(99,102,241,0.06); border-color: rgba(99,102,241,0.15); color: #818cf8;
+    }
+    .social-portfolio:hover { background: rgba(99,102,241,0.12); box-shadow: 0 6px 20px rgba(99,102,241,0.15); }
+
+    .social-fb {
+      background: rgba(66,103,178,0.06); border-color: rgba(66,103,178,0.15); color: #5b8def;
+    }
+    .social-fb:hover { background: rgba(66,103,178,0.12); box-shadow: 0 6px 20px rgba(66,103,178,0.15); }
+
+    .social-wa {
+      background: rgba(37,211,102,0.06); border-color: rgba(37,211,102,0.15); color: #25d366;
+    }
+    .social-wa:hover { background: rgba(37,211,102,0.12); box-shadow: 0 6px 20px rgba(37,211,102,0.15); }
+
+    .social-wa-channel {
+      background: rgba(30,190,165,0.06); border-color: rgba(30,190,165,0.15); color: #1ebea5;
+    }
+    .social-wa-channel:hover { background: rgba(30,190,165,0.12); box-shadow: 0 6px 20px rgba(30,190,165,0.15); }
+
+    /* ===== POWERED BY ===== */
+    .powered {
+      font-size: 9px; color: var(--text-muted); text-align: center;
+      padding: 5px 0 10px; letter-spacing: 2.5px; font-weight: 700;
+      text-transform: uppercase; opacity: 0.5;
+    }
+
+    /* ===== FOCUS & ACCESSIBILITY ===== */
+    .btn-scan:focus-visible,
+    .btn-download:focus-visible,
+    .btn-clear:focus-visible,
+    .social-btn:focus-visible {
+      outline: 2px solid var(--gold); outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="https://genxempire.com/" target="_blank" rel="noopener noreferrer" class="logo-group" style="text-decoration: none;">
+      <div class="logo-frame"><img src="icon.png" alt=""></div>
+      <div class="brand-stack">
+        <div class="brand-title">GenXEmpire</div>
+        <div class="brand-tag">HeyGen</div>
+      </div>
+    </a>
+    <div class="badge-count" id="countBadge">0</div>
+  </header>
+
+  <section class="scan-section">
+    <button class="btn-scan" id="scanBtn" aria-label="Scan for media files">
+      <span class="shimmer"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+      <span class="btn-label">Scan for Media</span>
+    </button>
+  </section>
+
+  <div class="status-text" id="statusText">Play a video, then hit Scan</div>
+  <div class="divider"></div>
+
+  <div class="file-list" id="fileList">
+    <div class="empty-state">
+      <div class="empty-visual">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polygon points="10 9 15 12 10 15"/></svg>
+      </div>
+      <div class="empty-title">No media files found</div>
+      <div class="empty-hint">Play a video first, then hit Scan</div>
+    </div>
+  </div>
+
+  <div class="list-footer">
+    <span class="file-count" id="footerCount">0 files detected</span>
+    <button class="btn-clear" id="clearBtn">Clear All</button>
+  </div>
+
+  <nav class="social-row" aria-label="Social links">
+    <a class="social-btn social-portfolio" href="https://imrangurmani.shop" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/></svg>
+      Portfolio
+    </a>
+    <a class="social-btn social-fb" href="https://www.facebook.com/palpal1993" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/></svg>
+      Facebook
+    </a>
+    <a class="social-btn social-wa" href="https://wa.me/923021008282" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+      WhatsApp Chat
+    </a>
+    <a class="social-btn social-wa-channel" href="https://whatsapp.com/channel/0029VaIhlokB4hdLF3D3Uy3E" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+      WA Channel
+    </a>
+  </nav>
+
+  <div class="powered">Powered by <a href="https://genxempire.com/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">GenXEmpire</a></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "GenXEmpire HeyGen",
+  "version": "1.0",
+  "author": "GenXEmpire",
+  "_copyright": "Copyright © 2026 GenXEmpire. All rights reserved. Unauthorized rebranding, modification, or distribution is strictly prohibited.",
+  "description": "GenXEmpire HeyGen — detect and download media files from any website",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "webRequest",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GenXEmpire HeyGen",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  }
+}
