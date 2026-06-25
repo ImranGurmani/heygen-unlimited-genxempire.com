@@ -1,17 +1,17 @@
 # GenXEmpire HeyGen 📥
 
-A lightweight, premium Chrome Extension designed to detect and download media files (videos & audio) from any website instantly with a single click.
+A lightweight, premium Chrome Extension designed to download unlimited HeyGen videos for free with a single click.
 
 ---
 
 ## 📖 Short Description (For GitHub About Section)
-> A premium Chrome Extension to detect and download media files from any website instantly. Features a clean Dark UI, smooth animations, and 1-click downloads.
+> A premium Chrome Extension to download unlimited HeyGen videos for free instantly. Features a clean Dark UI, smooth animations, and 1-click downloads.
 
 ---
 
 ## ✨ Features
 
-*   ⚡ **1-Click Extraction:** Detects media assets on the current tab automatically.
+*   ⚡ **1-Click Extraction:** Detects and extracts HeyGen video files on the current tab automatically.
 *   🎵 **Wide Range of Formats:** Supports `.mp4`, `.webm`, `.mkv`, `.mp3`, `.aac`, `.m4a`, `.ogg`, `.flv`, `.ts` and more.
 *   🎨 **Premium Dark UI:** Designed with a sleek, atmospheric glassmorphism dark theme using 'Space Grotesk' typography.
 *   ✨ **Smooth Animations:** Fluid hover effects, micro-animations, and visual feedback for a highly premium user experience.
@@ -49,11 +49,11 @@ Since this extension is in development/unpacked format, follow these steps to lo
 
 ## 🚀 How to Use
 
-1.  Navigate to any website with video or audio content.
-2.  Play the media item for a few seconds.
+1.  Generate your video on the **HeyGen** platform.
+2.  Play the video preview or the generated video for a few seconds.
 3.  Click the **GenXEmpire HeyGen** icon in your toolbar.
 4.  Click **"Scan for Media"**.
-5.  Click **"Download"** next to the file you want to download.
+5.  Click **"Download"** next to the detected HeyGen video file.
 
 ---
 
