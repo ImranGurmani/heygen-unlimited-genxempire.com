@@ -4,7 +4,7 @@
   "version": "1.0",
   "author": "GenXEmpire",
   "_copyright": "Copyright © 2026 GenXEmpire. All rights reserved. Unauthorized rebranding, modification, or distribution is strictly prohibited.",
-  "description": "GenXEmpire HeyGen — detect and download media files from any website",
+  "description": "GenXEmpire HeyGen - Free video and audio downloader extension. Easily extract, detect, and download media streams from any website in 1 click.",
   "permissions": [
     "activeTab",
     "scripting",
